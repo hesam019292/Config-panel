@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <title>ورود | پنل کانفیگ</title>
+  <%- include('partials/head') %>
+</head>
+<body class="auth-page">
+  <div class="auth-card">
+    <div class="brand"><span class="brand-mark">&#9670;</span><span>پنل کانفیگ</span></div>
+    <% if (error) { %>
+      <p class="error"><%= error %></p>
+    <% } %>
+    <form method="POST" action="/login">
+      <label>نام کاربری
+        <input type="text" name="username" autocomplete="username" required>
+      </label>
+      <label>رمز عبور
+        <input type="password" name="password" autocomplete="current-password" required>
+      </label>
+      <button type="submit">ورود</button>
+    </form>
+  </div>
+</body>
+</html>
