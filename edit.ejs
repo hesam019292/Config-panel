@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <title>ویرایش کاربر | پنل کانفیگ</title>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">&#9670;</span><span>پنل کانفیگ</span></div>
+    <a class="logout" href="/logout">خروج</a>
+  </header>
+  <main class="wrap">
+    <a class="back" href="/dashboard">&larr; بازگشت</a>
+    <section class="card">
+      <h2>ویرایش <%= user.name %></h2>
+      <% if (error) { %><p class="error"><%= error %></p><% } %>
+      <form method="POST" action="/users/<%= user.id %>/edit" class="grid">
+        <input type="text" name="name" value="<%= user.name %>" required>
+        <input type="text" name="note" value="<%= user.note || '' %>" placeholder="یادداشت">
+
+        <label class="small-label">تغییر سریع IP یا دامنه (اختیاری)</label>
+        <input type="text" name="newHost" placeholder="مثلاً 195.74.93.2 یا example.com">
+
+        <label class="small-label">کانفیگ کامل (در صورت نیاز به ویرایش دستی)</label>
+        <textarea name="config" rows="4"><%= user.config %></textarea>
+
+        <button type="submit">ذخیره تغییرات</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
