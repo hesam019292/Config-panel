@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <title>داشبورد | پنل کانفیگ</title>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">&#9670;</span><span>پنل کانفیگ</span></div>
+    <a class="logout" href="/logout">خروج</a>
+  </header>
+
+  <main class="wrap">
+    <% if (message) { %><div class="toast"><%= message %></div><% } %>
+
+    <section class="card">
+      <h2>افزودن کاربر جدید</h2>
+      <p class="hint">کانفیگ (لینک vless / vmess / trojan / ss) خودتان را همین‌جا پیست کنید؛ پنل خودش کانفیگ نمی‌سازد، فقط نگه‌داری و ویرایش می‌کند.</p>
+      <form method="POST" action="/users" class="grid">
+        <input type="text" name="name" placeholder="نام کاربر" required>
+        <input type="text" name="note" placeholder="یادداشت (اختیاری)">
+        <textarea name="config" placeholder="vless://..." rows="2" required></textarea>
+        <button type="submit">افزودن کاربر</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>مشترکین (<%= users.length %>)</h2>
+      <% if (users.length === 0) { %>
+        <p class="empty">هنوز کاربری اضافه نشده. از فرم بالا شروع کنید.</p>
+      <% } %>
+      <div class="user-list">
+        <% users.forEach(u => { %>
+          <div class="user-row">
+            <div class="user-main">
+              <div class="user-name"><%= u.name %></div>
+              <% if (u.note) { %><div class="user-note"><%= u.note %></div><% } %>
+              <div class="user-host"><%= u.host || 'نامشخص' %></div>
+            </div>
+            <div class="user-config">
+              <code class="masked" data-full="<%= u.config %>"><%= u.config.slice(0, 18) %>&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</code>
+              <button type="button" class="reveal-btn">نمایش</button>
+              <button type="button" class="copy-btn" data-copy="<%= u.config %>">کپی</button>
+            </div>
+            <div class="user-actions">
+              <a class="btn-edit" href="/users/<%= u.id %>/edit">ویرایش / تغییر IP</a>
+              <form method="POST" action="/users/<%= u.id %>/delete" onsubmit="return confirm('این کاربر حذف شود؟');">
+                <button type="submit" class="btn-delete">حذف</button>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
